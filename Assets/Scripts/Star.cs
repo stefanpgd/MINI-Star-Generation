@@ -25,10 +25,8 @@ public class Star : MonoBehaviour
 
             int roll2 = Random.Range(0, 100);
 
-            if(roll2 > 50)
-            {
-                moon2.SetActive(true);
-            }
+
+            moon2.SetActive(true);
         }
 
         Color color = Random.ColorHSV();
@@ -40,8 +38,6 @@ public class Star : MonoBehaviour
 
     private void Update()
     {
-
-
         angle += rotateSpeed * Time.deltaTime;
 
         star.transform.localRotation = Quaternion.Euler(0, 0, angle);
