@@ -3,6 +3,7 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     public PlanetInfo Info;
+    [HideInInspector] public bool HorizontalMovement = true;
 
     [SerializeField] private GameObject planet;
     [SerializeField] private SpriteRenderer planetRenderer;
@@ -19,7 +20,7 @@ public class Planet : MonoBehaviour
     private float moonDistance;
     private float orbitalRotationVelocityMoon;
 
-    private bool horizontal = false;
+    private float orbitOffsetMultiplier;
 
     public void SetupPlanet(PlanetInfo info)
     {
@@ -56,6 +57,8 @@ public class Planet : MonoBehaviour
         {
             moon.gameObject.SetActive(false);
         }
+
+        orbitOffsetMultiplier = Random.Range(2.5f, 10f);
     }
 
     private void Update()
@@ -66,13 +69,13 @@ public class Planet : MonoBehaviour
         float x = Info.DistanceFromStar * Mathf.Cos(angleFromSun);
         float y = Info.DistanceFromStar * Mathf.Sin(angleFromSun);
 
-        if(horizontal)
+        if(HorizontalMovement)
         {
-            planet.transform.position = new Vector3(x, y, 0);
+            planet.transform.position = new Vector3(x, y, 0f);
         }
         else
         {
-            planet.transform.position = new Vector3(x, 0, y);
+            planet.transform.position = new Vector3(x, (x + y) / orbitOffsetMultiplier, y);
         }
 
         planet.transform.localRotation = Quaternion.Euler(0f, 0f, localAngle);
@@ -88,13 +91,13 @@ public class Planet : MonoBehaviour
             my += y;
 
 
-            if(horizontal)
+            if(HorizontalMovement)
             {
                 moon.transform.position = new Vector3(mx, my, 0);
             }
             else
             {
-                moon.transform.position = new Vector3(mx, 0, my);
+                moon.transform.position = new Vector3(mx, (mx + my) / orbitOffsetMultiplier, my);
             }
         }
     }

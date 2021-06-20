@@ -1,3 +1,5 @@
+using SilverRogue.Tools;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +8,15 @@ public class StarSystemManager : MonoBehaviour
     [SerializeField] private GameObject starPrefab;
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private TMP_Text nameText, massText, diameterText, ageText;
+    [SerializeField] private Animator switchAnimator;
+    [SerializeField] private float switchDelay;
+
+    private List<Planet> planets = new List<Planet>();
+    private Timer switchTimer;
+
+    private float sunSize;
+    private float sunAge;
+    private float lastStarDistance;
 
     #region Singleton
     public static StarSystemManager Instance;
@@ -18,10 +29,15 @@ public class StarSystemManager : MonoBehaviour
     }
     #endregion
 
-    private float sunSize;
-    private float sunAge;
-
-    private float lastStarDistance;
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            switchAnimator.SetTrigger("Switch");
+            switchTimer = new Timer(switchDelay);
+            switchTimer.timerExpiredEvent += SwitchPlanetOrientation;
+        }
+    }
 
     public void CreateSystem(string seedName)
     {
@@ -119,5 +135,11 @@ public class StarSystemManager : MonoBehaviour
         Planet planet = p.GetComponent<Planet>();
 
         planet.SetupPlanet(info);
+        planets.Add(planet);
+    }
+
+    private void SwitchPlanetOrientation()
+    {
+        planets.ForEach(planet => planet.HorizontalMovement = !planet.HorizontalMovement);
     }
 }
