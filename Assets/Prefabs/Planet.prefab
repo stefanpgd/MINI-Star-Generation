@@ -305,3 +305,4 @@ MonoBehaviour:
   innenPlanetRenderer: {fileID: 3879322621282180940}
   moon: {fileID: 178455703942360025}
   moonRenderer: {fileID: 1554082827405195728}
+  orbitDrawerPrefab: {fileID: 1227826220250729396, guid: d9b96f109ce791a49bf4a8cfdb84cbf9, type: 3}

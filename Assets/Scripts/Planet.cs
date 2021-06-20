@@ -10,6 +10,10 @@ public class Planet : MonoBehaviour
     [SerializeField] private SpriteRenderer innenPlanetRenderer;
     [SerializeField] private GameObject moon;
     [SerializeField] private SpriteRenderer moonRenderer;
+    [SerializeField] private GameObject orbitDrawerPrefab;
+
+    private StarSystemManager starSystemManager;
+    private OrbitDrawer orbitDrawer;
 
     private float angleFromSun;
     private float localAngle;
@@ -21,6 +25,19 @@ public class Planet : MonoBehaviour
     private float orbitalRotationVelocityMoon;
 
     private float orbitOffsetMultiplier;
+    private bool isOrbitPositive;
+
+    private void Start()
+    {
+        starSystemManager = StarSystemManager.Instance;
+
+        starSystemManager.orientationUpdatedEvent += UpdateOrbits;
+    }
+
+    private void OnDestroy()
+    {
+        starSystemManager.orientationUpdatedEvent -= UpdateOrbits;
+    }
 
     public void SetupPlanet(PlanetInfo info)
     {
@@ -58,7 +75,21 @@ public class Planet : MonoBehaviour
             moon.gameObject.SetActive(false);
         }
 
-        orbitOffsetMultiplier = Random.Range(2.5f, 10f);
+        orbitOffsetMultiplier = Random.Range(2f, 7f);
+        int rollForDirection = Random.Range(0, 10);
+
+        if(rollForDirection >= 5)
+        {
+            isOrbitPositive = true;
+        }
+        else
+        {
+            isOrbitPositive = false;
+        }
+
+        GameObject o = Instantiate(orbitDrawerPrefab, Vector3.zero, Quaternion.identity);
+        orbitDrawer = o.GetComponent<OrbitDrawer>();
+        orbitDrawer.SetupOrbit(info.DistanceFromStar, true);
     }
 
     private void Update()
@@ -75,7 +106,14 @@ public class Planet : MonoBehaviour
         }
         else
         {
-            planet.transform.position = new Vector3(x, (x + y) / orbitOffsetMultiplier, y);
+            if(isOrbitPositive)
+            {
+                planet.transform.position = new Vector3(x, x / orbitOffsetMultiplier, y);
+            }
+            else
+            {
+                planet.transform.position = new Vector3(x, y / orbitOffsetMultiplier, y);
+            }
         }
 
         planet.transform.localRotation = Quaternion.Euler(0f, 0f, localAngle);
@@ -97,8 +135,27 @@ public class Planet : MonoBehaviour
             }
             else
             {
-                moon.transform.position = new Vector3(mx, (mx + my) / orbitOffsetMultiplier, my);
+                if(isOrbitPositive)
+                {
+                    moon.transform.position = new Vector3(mx, mx / orbitOffsetMultiplier, my);
+                }
+                else
+                {
+                    moon.transform.position = new Vector3(mx, my / orbitOffsetMultiplier, my);
+                }
             }
+        }
+    }
+
+    private void UpdateOrbits()
+    {
+        if(HorizontalMovement)
+        {
+            orbitDrawer.SetupOrbit(Info.DistanceFromStar, true);
+        }
+        else
+        {
+            orbitDrawer.SetupOrbit(Info.DistanceFromStar, false, orbitOffsetMultiplier, isOrbitPositive);
         }
     }
 }
