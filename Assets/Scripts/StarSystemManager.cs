@@ -14,6 +14,7 @@ public class StarSystemManager : MonoBehaviour
     [SerializeField] private Animator switchAnimator;
     [SerializeField] private float switchDelay;
 
+    private StarfieldBackground starfieldBackground;
     private List<Planet> planets = new List<Planet>();
     private Timer switchTimer;
 
@@ -32,13 +33,23 @@ public class StarSystemManager : MonoBehaviour
     }
     #endregion
 
+    private void Start()
+    {
+        starfieldBackground = StarfieldBackground.Instance;
+
+        switchTimer = new Timer(switchDelay);
+    }
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(switchTimer.Expired)
         {
-            switchAnimator.SetTrigger("Switch");
-            switchTimer = new Timer(switchDelay);
-            switchTimer.timerExpiredEvent += SwitchPlanetOrientation;
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                switchAnimator.SetTrigger("Switch");
+                switchTimer = new Timer(switchDelay);
+                switchTimer.timerExpiredEvent += SwitchPlanetOrientation;
+            }
         }
     }
 
@@ -52,6 +63,8 @@ public class StarSystemManager : MonoBehaviour
         SetupPlanet(true);
         SetupPlanet(false);
         SetupPlanet(false);
+
+        starfieldBackground.CreateStarfield();
     }
 
     private void SetupStar()

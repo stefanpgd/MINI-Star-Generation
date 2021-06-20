@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 95512608}
   - component: {fileID: 95512607}
   - component: {fileID: 95512609}
+  - component: {fileID: 95512610}
+  - component: {fileID: 95512611}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -204,6 +206,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f283d56ca51fb84ea0e88551d6b5fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &95512610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95512605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1493f8d28c29394bbbf4ee02120ed5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &95512611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95512605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27428acd7416701439e27c85808210a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starPrefab: {fileID: 3702900784972933018, guid: 03c756310c2d79743a771ccc0333d845, type: 3}
+  spawnAmount: 45
+  boundaries: {x: 17.5, y: 10}
+  zDistance: 15
+  starColor: {r: 0.98182005, g: 1, b: 0.7216981, a: 0}
+  randomRotation: 1
+  dimStarsRandomly: 1
 --- !u!1 &138638475
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +313,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138638475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 13.2}
+  m_LocalPosition: {x: 0, y: 0, z: 25}
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

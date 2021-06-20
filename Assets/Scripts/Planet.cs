@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Render the sprite index based on the count of the planet generated
 public class Planet : MonoBehaviour
 {
     public PlanetInfo Info;
