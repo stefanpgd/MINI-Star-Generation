@@ -1,9 +1,10 @@
 [System.Serializable]
-public struct StarInfo 
+public struct PlanetInfo
 {
     public string Name;
     public float GameSize;
-    public double Mass; // in solar-masses
+    public float DistanceFromStar;
+    public double Mass; // should be in another format
     public double Age; // In billions 
     public int Diameter; // in kilometers
 }
