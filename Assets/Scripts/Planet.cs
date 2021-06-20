@@ -5,7 +5,8 @@ public class Planet : MonoBehaviour
     public PlanetInfo Info;
 
     [SerializeField] private GameObject planet;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer planetRenderer;
+    [SerializeField] private SpriteRenderer innenPlanetRenderer;
     [SerializeField] private GameObject moon;
     [SerializeField] private SpriteRenderer moonRenderer;
 
@@ -18,12 +19,19 @@ public class Planet : MonoBehaviour
     private float moonDistance;
     private float orbitalRotationVelocityMoon;
 
+    private bool horizontal = false;
+
     public void SetupPlanet(PlanetInfo info)
     {
         planet.transform.localScale = new Vector3(info.GameSize, info.GameSize, info.GameSize);
 
-        Color color = Random.ColorHSV();
-        spriteRenderer.color = color;
+        Color planetColor = Random.ColorHSV();
+        planetRenderer.color = planetColor;
+
+        planetColor.r += 0.1f;
+        planetColor.g += 0.1f;
+        planetColor.b += 0.1f;
+        innenPlanetRenderer.color = planetColor;
 
         angleFromSun = Random.Range(-180, 180);
         localAngle = Random.Range(-180, 180);
@@ -58,8 +66,16 @@ public class Planet : MonoBehaviour
         float x = Info.DistanceFromStar * Mathf.Cos(angleFromSun);
         float y = Info.DistanceFromStar * Mathf.Sin(angleFromSun);
 
-        planet.transform.position = new Vector3(x, 0, y);
-        //planet.transform.localRotation = Quaternion.Euler(0f, 0f, localAngle);
+        if(horizontal)
+        {
+            planet.transform.position = new Vector3(x, y, 0);
+        }
+        else
+        {
+            planet.transform.position = new Vector3(x, 0, y);
+        }
+
+        planet.transform.localRotation = Quaternion.Euler(0f, 0f, localAngle);
 
         if(moon.activeSelf)
         {
@@ -71,7 +87,15 @@ public class Planet : MonoBehaviour
             mx += x;
             my += y;
 
-            moon.transform.position = new Vector3(mx, 0, my);
+
+            if(horizontal)
+            {
+                moon.transform.position = new Vector3(mx, my, 0);
+            }
+            else
+            {
+                moon.transform.position = new Vector3(mx, 0, my);
+            }
         }
     }
 }

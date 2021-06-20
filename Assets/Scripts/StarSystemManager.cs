@@ -92,7 +92,7 @@ public class StarSystemManager : MonoBehaviour
         }
 
         info.Name = new string(name);
-        info.GameSize = Random.Range(0.25f, sunSize - 1f);
+        info.GameSize = Random.Range(0.75f, sunSize - 0.5f);
 
         if(first)
         {
