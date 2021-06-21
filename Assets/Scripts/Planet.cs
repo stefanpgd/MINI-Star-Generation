@@ -138,7 +138,7 @@ public class Planet : MonoBehaviour
             {
                 if(isOrbitPositive)
                 {
-                    moon.transform.position = new Vector3(mx, mx / orbitOffsetMultiplier, my);
+                    moon.transform.position = new Vector3(mx , mx / orbitOffsetMultiplier, my);
                 }
                 else
                 {

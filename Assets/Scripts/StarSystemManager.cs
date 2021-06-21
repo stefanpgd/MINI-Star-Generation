@@ -128,12 +128,12 @@ public class StarSystemManager : MonoBehaviour
 
         if(first)
         {
-            info.DistanceFromStar = UnityEngine.Random.Range(3f, 7.5f);
+            info.DistanceFromStar = UnityEngine.Random.Range(5f, 10f);
             lastStarDistance = info.DistanceFromStar;
         }
         else
         {
-            info.DistanceFromStar = UnityEngine.Random.Range(lastStarDistance + 1.5f, lastStarDistance + 3.5f);
+            info.DistanceFromStar = UnityEngine.Random.Range(lastStarDistance + 2f, lastStarDistance + 5.5f);
             lastStarDistance = info.DistanceFromStar;
         }
 
